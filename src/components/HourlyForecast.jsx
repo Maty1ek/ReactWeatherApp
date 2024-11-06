@@ -1,17 +1,18 @@
 import { weatherCodes } from '../constants.js'
 
-const HourlyForecast = ({hourlyWeather}) => {
-  const time = hourlyWeather.time.substr(-5, 5)
-  const temp = Math.round(hourlyWeather.temp_c)
-  const weatherIcon = Object.keys(weatherCodes)
-        .find(icon => weatherCodes[icon].includes(hourlyWeather.condition.code))
-  
+const HourlyForecast = ({ forecastWeather }) => {
+  const forecastTime = forecastWeather.time.substr(-5, 5)
+  // const forecastTime = forecastWeather.time.slice(-5, forecastWeather.time.length)
+
+  const hourlyIcon = Object.keys(weatherCodes)
+    .find((state) => weatherCodes[state].includes(forecastWeather.condition.code))
+
   return (
     <li className="weather-item">
-            <p className="time">{time}</p>
-            <img src={`icons/${weatherIcon}.svg` }alt="" className="weather-icon" />
-            <p className="temprature">{temp}°</p>
-          </li>
+      <p className="time">{forecastTime}</p>
+      <img src={`icons/${hourlyIcon}.svg`} alt="" className="weather-icon" />
+      <p className="temprature">{Math.round(forecastWeather.temp_c)}°</p>
+    </li>
   )
 }
 
