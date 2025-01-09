@@ -1,1 +1,1 @@
-# Simple Weather App wrote on react JS
+# Simple Weather App wrote with react JS
