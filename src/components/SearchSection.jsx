@@ -1,35 +1,24 @@
-const SearchSection = ({ getWeatherDetails, searchInputRef }) => {
-  const API_KEY = import.meta.env.VITE_API_KEY
+import { useRef } from "react"
 
-  const handleCitySearch = (e) => {
+const SearchSection = ({getData, inputRef, getLocation}) => {
+
+  const handleSubmit = (e) => {
     e.preventDefault()
-    const searchInput = e.target.querySelector('.search-input')
-    const API_URL = `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${searchInput.value}&days=2`
-    getWeatherDetails(API_URL)
+    const cityName = inputRef.current.value.toLowerCase()
+    getData(cityName)
   }
 
-  function getCurrentLocation() {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords
-        const API_URL = `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${latitude},${longitude}&days=2`
-        getWeatherDetails(API_URL)
-      },
-      () => {
-        alert('Location access denied. Please enable permissions to use this feature')
-      }
-    )
-  }
+  
 
   return (
     <div className="search-section">
-      <form action="#" className="search-form" onSubmit={handleCitySearch}>
+      <form action="#" className="search-form" onSubmit={handleSubmit}>
         <i className="fa-solid fa-magnifying-glass"></i>
         <input type="search" placeholder="Enter a city name"
-          className="search-input" ref={searchInputRef} required />
+          className="search-input" ref={inputRef} required />
       </form>
-      <button className="location-button">
-        <i className="fa-solid fa-location-crosshairs" onClick={getCurrentLocation}></i>
+      <button className="location-button" onClick={getLocation}>
+        <i className="fa-solid fa-location-crosshairs"></i>
       </button>
     </div>
   )
